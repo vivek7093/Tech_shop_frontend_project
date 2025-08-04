@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Tech-Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <style>
+        body {
+            background: #18191a;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 60px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.4rem;
+        }
+
+        .navbar-brand:hover {
+            color: #f44336 !important;
+            transform: scale(1.05);
+            transition: all 0.s ease;
+        }
+
+        .icon-btn {
+            color: #fff;
+            background: none;
+            border: none;
+            margin-left: 15px;
+            position: relative;
+            font-size: 1.3rem;
+        }
+
+        .badge-custom {
+            position: absolute;
+            top: -6px;
+            right: -9px;
+            background: #f44336;
+            font-size: 0.7rem;
+            padding: 0 6px;
+            border-radius: 50%;
+        }
+
+        .carousel-item h2 {
+            font-size: 3rem;
+            font-weight: 700;
+
+        }
+
+        .product-img {
+            max-height: 450px;
+            width: auto;
+            height: auto;
+        }
+
+        .carousel-indicators {
+            bottom: 100px;
+        }
+
+        .carousel-indicators [data-bs-target] {
+            background-color: #fff;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            margin: 0 5px;
+        }
+
+        .carousel-indicators [data-bs-target]:hover {
+            background-color: #f44336;
+            transform: scale(2);
+            transition: all 0.3s ease;
+        }
+
+        .search-wrapper {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .search-text {
+            visibility: hidden;
+            position: absolute;
+            transition: opacity 0.3s ease;
+        }
+
+        .search-wrapper:hover .search-text {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-item {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .cart-text {
+            visibility: hidden;
+            position: absolute;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-item:hover .cart-text {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sign-in-text {
+            border: #fff;
+            visibility: hidden;
+            position: absolute;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
+        }
+
+        .h4 {
+            font-weight: bold;
+        }
+
+        .sign-in:hover .sign-in-text {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .profile-popup {
+            display: inline-block;
+            position: absolute;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .icon-btn:hover .profile-popup {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-body input {
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-right {
+            position: fixed;
+            top: 60px;
+            right: 10px;
+            max-width: 250px;
+            width: 100%;
+            z-index: 1055;
+        }
+
+        .card1:hover {
+            transform: scale(1.1);
+        }
+
+        .card2:hover {
+            transform: scale(1.1);
+        }
+
+        .card3:hover {
+            transform: scale(1.1);
+        }
+
+        .card4:hover {
+            transform: scale(1.1);
+        }
+
+        .card5:hover {
+            transform: scale(1.1);
+        }
+
+        .footer {
+            background-color: rgb(32, 28, 28);
+            height: 250px;
+        }
+
+        footer {
+            padding: 0px 20px;
+            margin-top: auto;
+        }
+
+        .iconsfooter {
+            margin-left: 200px;
+        }
+
+        .item1:hover {
+            border: 2px solid red;
+            background-color: #f44336;
+        }
+
+        .item2:hover {
+            border: 2px solid red;
+            background-color: #f44336;
+        }
+
+        .item3:hover {
+            border: 2px solid red;
+            background-color: #f44336;
+        }
+
+        .item4:hover {
+            border: 2px solid red;
+            background-color: #f44336;
+        }
+
+        .item5:hover {
+            border: 2px solid red;
+            background-color: #f44336;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar px-3 fixed-top" style="background:#18191a; min-height:54px">
+        <a class="navbar-brand" href="./frontpage.html">Tech-Shop</a>
+        <div class="ms-auto d-flex align-items-center">
+            <button class="icon-btn" title="Search"><i class="bi bi-search"></i></button>
+            <a class="icon-btn" title="My Cart" href="./cart.html"><i class="bi bi-cart"></i><span
+                    class="badge-custom"></span></a>
+            <button class="icon-btn" title="Account" data-bs-toggle="modal" data-bs-target="#accountPrompt"><i
+                    class="bi bi-person"></i></button>
+        </div>
+    </nav>
+
+    <!-- Account Prompt Modal (aligned right corner) -->
+    <div class="modal fade" id="accountPrompt" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-scrollable modal-right">
+            <div class="modal-content bg-dark text-light p-3">
+                <h6 class="mb-2"><strong>Hello!</strong></h6>
+                <p class="mb-2">Access account and manage orders</p>
+                <button class="btn btn-outline-light w-100 mb-2" data-bs-target="#loginModal" data-bs-toggle="modal"
+                    data-bs-dismiss="modal">Login / Signup</button>
+                <small class="text-muted">Please Login</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login / Signup Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light p-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="formTitle">Login</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="switchPrompt">New to Tech-Shop? <span class="text-info cursor-pointer"
+                            data-bs-target="#signupForm" data-bs-toggle="modal" data-bs-dismiss="modal">Create an
+                            account</span></p>
+                    <input type="email" class="form-control mt-2" placeholder="Email">
+                    <input type="password" class="form-control mt-2" placeholder="Password">
+                    <button class="btn btn-danger w-100 mt-3">Login</button>
+                    <p class="text-center mt-2">or login with</p>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-primary">Facebook</button>
+                        <button class="btn btn-danger">Google</button>
+                        <button class="btn btn-info text-white">Twitter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupForm" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light p-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">Signup</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Already have an account? <span class="text-info cursor-pointer" data-bs-target="#loginModal"
+                            data-bs-toggle="modal" data-bs-dismiss="modal">Login</span></p>
+                    <input type="text" class="form-control" placeholder="Username">
+                    <input type="email" class="form-control mt-2" placeholder="Email">
+                    <input type="password" class="form-control mt-2" placeholder="Password">
+                    <input type="password" class="form-control mt-2" placeholder="Confirm Password">
+                    <button class="btn btn-danger w-100 mt-3">Signup</button>
+                    <p class="text-center mt-2">or Signup with</p>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-primary">Facebook</button>
+                        <button class="btn btn-danger">Google</button>
+                        <button class="btn btn-info text-white">Twitter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="productCarousel" class="carousel slide mt-3" data-bs-ride="carousel" data-bs-interval="3000">
+        <!-- Slides -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container py-5 d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <div class="text-center text-md-start">
+                        <h6>Sony WH-XB910N</h6>
+                        <h2>Give Your Favourite <br> Music A Boost.</h2>
+                        <p><strong>₹13,489</strong> <del>₹19,990</del></p>
+                        <a href="#" class="btn btn-danger">Shop Now</a>
+                    </div>
+                    <img src="images/sonyXb910n-1.png" alt="Sony" class="img-fluid product-img ">
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-item">
+                <div class="container py-5 d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <div class="text-center text-md-start">
+                        <h6>boAt Airdopes 131</h6>
+                        <h2>Featherweight For<br> Comfort All-Day.</h2>
+                        <p><strong>₹1,099</strong> <del>₹2,990</del></p>
+                        <a href="#" class="btn btn-danger">Shop Now</a>
+                    </div>
+                    <img src="images/boat131-1.png" alt="boAt" class="img-fluid product-img ">
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="carousel-item">
+                <div class="container py-5 d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <div class="text-center text-md-start">
+                        <h6>JBL Live 660NC</h6>
+                        <h2>Keep The Noise Out,<br> Or In. You Choose.</h2>
+                        <p><strong>₹9,999</strong> <del>₹14,999</del></p>
+                        <a href="#" class="btn btn-danger">Shop Now</a>
+                    </div>
+                    <img src="images/jbl500bt-1.png" alt="JBL" class="img-fluid product-img ">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+            aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    </div>
+    <h2 class="text-center align-items-center justify-content-center mb-5">Feature products</h2>
+    <div class="d-flex flex-wrap gap-3 mt-5 ">
+        <div class="card1">
+            <div class=" card justify-content-center ms-5 gap-5" style="width: 15rem; background: #18191a;">
+                <p class="align-items-center text-center justify-content-center text-white">Boat Rockerz 518</p>
+                <img src="images/boat518-1.png" class="card-img-top bg-#18191a" alt="...">
+                <div class="card-body">
+                    <p class=""><strong class="text-white text-opacity-50">₹13,489</strong> <del
+                            class="text-white text-opacity-25">₹19,990</del></p>
+                </div>
+            </div>
+        </div>
+        <div class="card2">
+            <div class=" card justify-content-center ms-4 gap-5" style="width: 15rem; background: #18191a;">
+                <p class="align-items-center text-center justify-content-center text-white">Boat Rockerz 518</p>
+                <img src="images/boat203-1.png" class="card-img-top bg-#18191a" alt="...">
+                <div class="card-body">
+                    <p class=""><strong class="text-white text-opacity-50">₹1,299</strong> <del
+                            class="text-white text-opacity-25">₹3,990</del></p>
+                </div>
+            </div>
+        </div>
+        <div class="card3">
+            <div class=" card justify-content-center ms-4 gap-5" style="width: 15rem; background: #18191a;">
+                <p class="align-items-center text-center justify-content-center text-white">JBL Tune 760NC</p>
+                <img src="images/jbl760nc-1.png" class="card-img-top bg-#18191a" alt="...">
+                <div class="card-body">
+                    <p class=""><strong class="text-white text-opacity-50">₹5,999</strong> <del
+                            class="text-white text-opacity-25">₹7,999</del></p>
+                </div>
+            </div>
+        </div>
+        <div class="card4">
+            <div class=" card justify-content-center ms-4 gap-5" style="width: 15rem; background: #18191a;">
+                <p class="align-items-center text-center justify-content-center text-white">Boat Rockerz 255</p>
+                <img src="images/boat255r-1.png" class="card-img-top bg-#18191a" alt="...">
+                <div class="card-body">
+                    <p class=""><strong class="text-white text-opacity-50">₹899</strong> <del
+                            class="text-white text-opacity-25">₹2,990</del></p>
+                </div>
+            </div>
+        </div>
+        <div class="card5">
+            <div class=" card justify-content-center ms-5 gap-5" style="width: 15rem; background: #18191a;">
+                <p class="align-items-center text-center justify-content-center text-white">JBL Endurance Run Sports
+                </p>
+                <img src="images/jbl-endu-1.png" class="card-img-top bg-#18191a" alt="...">
+                <div class="card-body">
+                    <p class=""><strong class="text-white text-opacity-50">₹999</strong> <del
+                            class="text-white text-opacity-25">₹1,599</del></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <h3 class="d-flex justify-content-center align-items-center text-white fs-bold mt-5">Top Products</h3><br>
+    <div class=" items d-flex flex-row mb-5 mt-4 justify-content-center gap-5 d-block ">
+        <div class=" item1 p-2">All</div>
+        <div class=" item2 p-2">Headphones</div>
+        <div class=" item3 p-2">Earbuds</div>
+        <div class=" item4 p-2">Earphones</div>
+        <div class=" item5 p-2">Neckbands</div>
+    </div>
+    <div class=" cardtop d-flex flex-wrap gap-5 mt-5 ms-5 justify-content-center">
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/jbl660nc-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">JBL Live 660NC</h5>
+                <p class="card-text text-white text-opacity-75">Wireless Over-Ear NC<br>Headphones</p>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹9,999</strong>
+                    <del class="text-white text-opacity-50">₹14,999</del>
+                </p><br>
+                <a href="./product.html"
+                    class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/boat518-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Boat Rockerz 518</h5>
+                <p class="card-text text-white text-opacity-75">On Ear Wireless <br>Headphones</p>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹1,299</strong>
+                    <del class="text-white text-opacity-50">₹3,990</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/boat131-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Boat Airpodes 131</h5>
+                <p class="card-text text-white text-opacity-75">Wireless In-Air buds</p><br>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹1,099</strong>
+                    <del class="text-white text-opacity-50">₹2,990</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/boat110-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Boat BassHeads 110</h5>
+                <p class="card-text text-white text-opacity-75">In-Ear Wired Earphones</p><br>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹499</strong>
+                    <del class="text-white text-opacity-50">₹999</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+    </div>
+
+    <div class=" cardtop d-flex flex-wrap gap-5 mt-5 ms-5 justify-content-center">
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/boat410-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Boat Rockerz 410</h5>
+                <p class="card-text text-white text-opacity-75">Bluetooth & Wired On-Ear<br>Headphones</p>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹1,599</strong>
+                    <del class="text-white text-opacity-50">₹2,990</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/jbl200bt-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">JBL Live 200BT</h5>
+                <p class="card-text text-white text-opacity-75">In-Ear Wireless Neckbands</p><br>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹3,699</strong>
+                    <del class="text-white text-opacity-50">₹5,299</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/sonyXb910n-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Sony WH-XB910N</h5>
+                <p class="card-text text-white text-opacity-75">Wireless Over-Ear <br>Headphones</p>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹13,489</strong>
+                    <del class="text-white text-opacity-50">₹19,999</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/boat255r-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Boat Rockerz 255</h5>
+                <p class="card-text text-white text-opacity-75"> In-Ear Wireless Neckbands</p><br>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹899</strong>
+                    <del class="text-white text-opacity-50">₹2,990</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+    </div>
+
+    <div class=" cardtop d-flex flex-wrap gap-5 mt-5 ms-5 justify-content-center">
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/jbl100-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">JBL Wave 100</h5>
+                <p class="card-text text-white text-opacity-75">In-Ear Truly Wireless Earbuds</p><br>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹2,999</strong>
+                    <del class="text-white text-opacity-50">₹6,999</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/jbl760nc-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">JBL Tune 760NC</h5>
+                <p class="card-text text-white text-opacity-75">Wireless Over-Ear NC<br>Headphones</p>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹5,999</strong>
+                    <del class="text-white text-opacity-50">₹7,999</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <img src="images/sony1000xm4-1.png" class="card-img-top" alt="...">
+            <div class="card-body">
+                <p class="text-danger">★★★★★</p>
+                <h5 class="card-title text-white">Sony WF-1000XM4</h5>
+                <p class="card-text text-white text-opacity-75">Wireless In-Ear NC<br>Headphones</p>
+                <p class="border-top border-1 fs-bold "><strong class="text-white ">₹19,990</strong>
+                    <del class="text-white text-opacity-50">₹24,990</del>
+                </p><br>
+                <a href="#" class="btn btn-danger d-flex justify-content-center align-items-center mx-auto">Add to
+                    cart</a>
+            </div>
+        </div>
+        <div class="card" style="width: 16rem; background: #18191a; border: 1px solid white;">
+            <div class="card-body text-center text-align-center h-50">
+                <p class=" d-flex align-items-center text-align-center text-white h-100 justify-content-center">Browse
+                    All <br>
+                    Products →</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h2 class="text-center align-items-center justify-content-between m-5">Our Advantages</h2>
+        <div class="d-flex justify-content-between flex-wrap gap-0 mt-5 p-0">
+            <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+                <i class="bi bi-truck text-danger fs-3"></i>
+                <div>
+                    <p>Express Delivery <br> Ship in 24 Hours</p>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+                <i class="bi bi-shield-check text-danger fs-3"></i>
+                <p>Brand Warranty<br> 100% Original products</p>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+                <i class="bi bi-tags text-danger fs-3 "></i>
+                <p>Exciting Deals<br> On All prepaid Orders</p>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+                <i class="bi bi-credit-card text-danger fs-3 "></i>
+                <p>Secure Payments <br> SSL / Secure Payments</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- <footer class="footer bg-black py-5 justify-content-center"> -->
+        <div class="container-fluid px-5">
+            <div class="row">
+
+                <div class="col-md-4 mb-4 ">
+                    <h5>Tech shop</h5>
+                    <p class=" text-white text-opacity-75">Subscribe to our email alert to recive early discount
+                        offers,<br>and product info</p>
+                    <nav class="">
+                        <input type="email Address" name="email" placeholder=" email Address "
+                            style="color: white; background-color: black; text-align: center;"><br><br>
+                        <button class="btn btn-subscribe bg-danger text-white">Subscribe</button>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Help</h5>
+                    <ul class="list-unstyled text-white text-opacity-75">
+                        <li>FAQs</li>
+                        <li>Track Order</li>
+                        <li>Cancel Order</li>
+                        <li>Return Order</li>
+                        <li>Warranty Info</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h5>Policies</h5>
+                    <ul class="list-unstyled text-white text-opacity-75">
+                        <li>Return Policy</li>
+                        <li>Security</li>
+                        <li>Sitemap</li>
+                        <li>Privacy Policy</li>
+                        <li>Terms & Conditions</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled text-white text-opacity-75">
+                        <li>About Us</li>
+                        <li>Contact Us</li>
+                        <li>Service center</li>
+                        <li>Careers</li>
+                        <li>Affiliates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+    <footer class="bg-black border-top border-1"><br>
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <!-- Left side -->
+                <div class="col-md-6 text-start text-white text-opacity-75">
+                    <p class="mb-0">2025 | All Rights Reserved ©</p>
+                </div>
+
+                <!-- Right side -->
+                <div class="col-md-6 text-end p-3">
+                    <div class="d-inline-flex align-items-center gap-3">
+                        <i class="bi bi-facebook text-white"></i>
+                        <i class="bi bi-instagram text-white"></i>
+                        <i class="bi bi-twitter text-white"></i>
+                        <i class="bi bi-linkedin text-white"></i>
+                        <a href="#top">
+                            <button class="btn btn-danger btn-sm ms-5"><i class="bi bi-chevron-up"></i></button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

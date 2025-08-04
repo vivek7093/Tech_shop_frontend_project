@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+
+    <!-- Bootstrap CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+    <style>
+        body {
+            background: #18191a;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            padding-top: 60px;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.4rem;
+        }
+
+        .navbar-brand:hover {
+            color: #f44336 !important;
+            transform: scale(1.05);
+            transition: all 0.s ease;
+        }
+
+        .icon-btn {
+            color: #fff;
+            background: none;
+            border: none;
+            margin-left: 15px;
+            position: relative;
+            font-size: 1.3rem;
+        }
+
+        .modal-right {
+            position: fixed;
+            top: 60px;
+            right: 10px;
+            max-width: 250px;
+            width: 100%;
+            z-index: 1055;
+        }
+
+        cart-item {
+            background-color: #2c2c2c;
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #444;
+        }
+
+        .cart-item:hover {
+            background-color: #3a3a3a;
+        }
+
+        .cart-img {
+            height: 120px;
+            object-fit: contain;
+        }
+
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 20px;
+            padding: 0;
+        }
+
+        .summary-box {
+            background-color: #2c2c2c;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 20px;
+            border: 1px solid #444;
+        }
+
+        .text-green {
+            color: #28a745;
+        }
+
+        hr {
+            border-top: 1px solid #555;
+        }
+
+        /* Scroll container for cart items */
+        .cart-scroll-container {
+            max-height: 80vh;
+            /* adjust height as needed */
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* Custom scrollbar for dark theme */
+        .cart-scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .cart-scroll-container::-webkit-scrollbar-track {
+            background: #1c1c1c;
+        }
+
+        .cart-scroll-container::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 10px;
+        }
+
+        /* Quantity number styling */
+        .cart-item span.px-3 {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 6px 12px;
+            display: inline-block;
+            min-width: 40px;
+            text-align: center;
+            background-color: #1c1c1c;
+            color: #dc3545;
+            /* Bootstrap danger color for quantity */
+        }
+
+        .footer {
+            width: 100%;
+            background-color: #000;
+            color: #fff;
+            padding: 40px 20px 20px 20px;
+            margin-top: auto;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer input {
+            background-color: transparent;
+            border: 1px solid #fff;
+            padding: 8px;
+            color: #fff;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .footer button.btn-subscribe {
+            width: 100%;
+        }
+
+        .footer ul {
+            padding-left: 0;
+        }
+
+        .footer ul li {
+            list-style: none;
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+        }
+
+        .footer-bottom .social-icons i {
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .foot {
+            max-width: fit-content;
+        }
+
+        /* .iconsfooter{
+      margin-left: 200px;
+      margin-bottom: -30px;
+    } */
+    </style>
+</head>
+
+<body>
+    <nav class="navbar px-3 fixed-top" style="background:#18191a; min-height:54px">
+        <a class="navbar-brand" href="./frontpage.html">Tech-Shop</a>
+        <div class="ms-auto d-flex align-items-center">
+            <button class="icon-btn" title="Search" onclick="alert('Search')"><i class="bi bi-search"></i></button>
+            <a class="icon-btn" title="My Cart" href="#"><i class="bi bi-cart"></i><span
+                    class="badge-custom"></span></a>
+            <button class="icon-btn" title="Account" data-bs-toggle="modal" data-bs-target="#accountPrompt"><i
+                    class="bi bi-person"></i></button>
+        </div>
+    </nav>
+
+    <!-- Account Prompt Modal (aligned right corner) -->
+    <div class="modal fade" id="accountPrompt" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-scrollable modal-right">
+            <div class="modal-content bg-dark text-light p-3">
+                <h6 class="mb-2"><strong>Hello!</strong></h6>
+                <p class="mb-2">Access account and manage orders</p>
+                <button class="btn btn-outline-light w-100 mb-2" data-bs-target="#loginModal" data-bs-toggle="modal"
+                    data-bs-dismiss="modal">Login / Signup</button>
+                <small class="text-muted">Please Login</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login / Signup Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light p-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="formTitle">Login</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="switchPrompt">New to Tech-Shop? <span class="text-info cursor-pointer"
+                            data-bs-target="#signupForm" data-bs-toggle="modal" data-bs-dismiss="modal">Create an
+                            account</span></p>
+                    <input type="email" class="form-control mt-2" placeholder="Email">
+                    <input type="password" class="form-control mt-2" placeholder="Password">
+                    <button class="btn btn-danger w-100 mt-3">Login</button>
+                    <p class="text-center mt-2">or login with</p>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-primary">Facebook</button>
+                        <button class="btn btn-danger">Google</button>
+                        <button class="btn btn-info text-white">Twitter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupForm" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark text-light p-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title">Signup</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Already have an account? <span class="text-info cursor-pointer" data-bs-target="#loginModal"
+                            data-bs-toggle="modal" data-bs-dismiss="modal">Login</span></p>
+                    <input type="text" class="form-control" placeholder="Username">
+                    <input type="email" class="form-control mt-2" placeholder="Email">
+                    <input type="password" class="form-control mt-2" placeholder="Password">
+                    <input type="password" class="form-control mt-2" placeholder="Confirm Password">
+                    <button class="btn btn-danger w-100 mt-3">Signup</button>
+                    <p class="text-center mt-2">or Signup with</p>
+                    <div class="d-flex justify-content-around">
+                        <button class="btn btn-primary">Facebook</button>
+                        <button class="btn btn-danger">Google</button>
+                        <button class="btn btn-info text-white">Twitter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">🛒 Your Cart</h2>
+        <div class="row">
+
+            <!-- Cart Items (Left Column) -->
+            <div class="col-md-8 cart-scroll-container">
+
+                <!-- Cart Item 1 -->
+                <div class="cart-item">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <img src="images/jbl660nc-1.png" alt="JBL 660NC" class="cart-img me-4">
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="mb-2">JBL Live 660NC Wireless Over-Ear NC <br>Headphones</h5>
+                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                            </div>
+                            <p><strong>₹9,999</strong> <del class="text-muted ms-2">₹14,999</del></p>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-outline-secondary quantity-btn">-</button>
+                                <span class="px-3">1</span>
+                                <button class="btn btn-outline-secondary quantity-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+
+                <!-- Cart Item 2 -->
+                <div class="cart-item">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <img src="images/boat518-1.png" alt="boAt Rockerz 518" class="cart-img me-4">
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="mb-2">boAt Rockerz 518 On-Ear Wireless <br>Headphones</h5>
+                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                            </div>
+                            <p><strong>₹1,299</strong> <del class="text-muted ms-2">₹3,990</del></p>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-outline-secondary quantity-btn">-</button>
+                                <span class="px-3">1</span>
+                                <button class="btn btn-outline-secondary quantity-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+
+                <!-- Cart Item 3 -->
+                <div class="cart-item">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <img src="images/boat131-1.png" alt="boAt Airdopes 131" class="cart-img me-4">
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="mb-2">boAt Airdopes 131 Wireless In-Ear <br>Earbuds</h5>
+                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                            </div>
+                            <p><strong>₹1,099</strong> <del class="text-muted ms-2">₹2,990</del></p>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-outline-secondary quantity-btn">-</button>
+                                <span class="px-3">1</span>
+                                <button class="btn btn-outline-secondary quantity-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+
+                <!-- Cart Item 4 -->
+                <div class="cart-item">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <img src="images/jbl200bt-1.png" alt="JBL Live 200BT" class="cart-img me-4">
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h5 class="mb-2">JBL Live 200BT In-Ear Wireless <br>Neckbands</h5>
+                                <button class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>
+                            </div>
+                            <p><strong>₹1,099</strong> <del class="text-muted ms-2">₹2,990</del></p>
+                            <div class="d-flex align-items-center gap-2">
+                                <button class="btn btn-outline-secondary quantity-btn">-</button>
+                                <span class="px-3">1</span>
+                                <button class="btn btn-outline-secondary quantity-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+
+            <!-- Order Summary (Right Column) -->
+            <div class="col-md-4">
+                <div class="summary-box">
+                    <h4>Order Summary (4 items)</h4>
+                    <div class="d-flex justify-content-between">
+                        <p>Original Price:</p>
+                        <strong>₹22,978</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Discount:</p>
+                        <strong class="text-green">-₹10,132</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Delivery:</p>
+                        <strong class="text-green">Free</strong>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between fs-5">
+                        <strong>Total:</strong>
+                        <strong>₹12,846</strong>
+                    </div>
+                    <div class="text-end mt-4">
+                        <button class="btn btn-danger w-100">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center align-items-center justify-content-between m-5">Our Advantages</h2>
+    <div class="d-flex justify-content-between flex-wrap gap-0 mt-3 p-0">
+        <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+            <i class="bi bi-truck text-danger fs-3"></i>
+            <div>
+                <p>Express Delivery <br> Ship in 24 Hours</p>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+            <i class="bi bi-shield-check text-danger fs-3"></i>
+            <p>Brand Warranty<br> 100% Original products</p>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+            <i class="bi bi-tags text-danger fs-3 "></i>
+            <p>Exciting Deals<br> On All prepaid Orders</p>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center align-items-start gap-3">
+            <i class="bi bi-credit-card text-danger fs-3 "></i>
+            <p>Secure Payments <br> SSL / Secure Payments</p>
+        </div>
+    </div>
+    </div><br>
+
+    <footer class="footer bg-black">
+        <div class="container ">
+            <div class="row">
+                <div class="foot col-md-4 mb-4 py-3">
+                    <h5>Tech shop</h5>
+                    <p class=" text-white text-opacity-75">Subscribe to our email alert to recive early discount
+                        offers,<br>and product info</p>
+                    <nav class="">
+                        <input type="email Address" name="email" placeholder="email Address*"
+                            style="color: white; background-color: black;"><br>
+                        <button class="btn btn-subscribe bg-danger text-white">Subscribe</button>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Help</h5>
+                    <ul class="list-unstyled text-white text-opacity-75">
+                        <li>FAQs</li>
+                        <li>Track Order</li>
+                        <li>Cancel Order</li>
+                        <li>Return Order</li>
+                        <li>Warranty Info</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 mb-4">
+                    <h5>Policies</h5>
+                    <ul class="list-unstyled text-white text-opacity-75">
+                        <li>Return Policy</li>
+                        <li>Security</li>
+                        <li>Sitemap</li>
+                        <li>Privacy Policy</li>
+                        <li>Terms & Conditions</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Company</h5>
+                    <ul class="list-unstyled text-white text-opacity-75">
+                        <li>About Us</li>
+                        <li>Contact Us</li>
+                        <li>Service center</li>
+                        <li>Careers</li>
+                        <li>Affiliates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-black border-top border-1"><br>
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <!-- Left side -->
+                    <div class="col-md-6 text-start text-white text-opacity-75">
+                        <p class="">2025 | All Rights Reserved ©</p>
+                    </div>
+
+                    <!-- Right side -->
+                    <div class="col-md-6 text-end">
+                        <div class="d-inline-flex align-items-center gap-3">
+                            <i class="bi bi-facebook text-white"></i>
+                            <i class="bi bi-instagram text-white"></i>
+                            <i class="bi bi-twitter text-white"></i>
+                            <i class="bi bi-linkedin text-white"></i>
+                            <a href="#top">
+                                <button class="btn btn-danger btn-sm"><i class="bi bi-chevron-up"></i></button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
